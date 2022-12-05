@@ -1,13 +1,18 @@
-<mvc:View displayBlock="true" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" controllerName="sap.ui.demo.basicTemplate.controller.App" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form">
+<mvc:View displayBlock="true"
+ xmlns="sap.m" 
+ xmlns:mvc="sap.ui.core.mvc" 
+ controllerName="sap.ui.demo.basicTemplate.controller.App" 
+ xmlns:core="sap.ui.core" 
+ xmlns:f="sap.ui.layout.form" 
+ xmlns:unified="sap.ui.unified">
     <Shell id="shell">
         <App>
             <pages>
                 <Page title="{i18n>title}">
                     <content>
-                        <Image src="images/MoviesHeader.png" width="100%" tooltip="Movie illustration" 
-						press="onPressImage"/>
+                        <Image src="images/MoviesHeader.png" width="100%" tooltip="Movie illustration" press="onPressImage" />
 
-                        <f:SimpleForm id="form" editable="true" layout="ColumnLayout" title="Find Movies"  columnsM="2" columnsL="3" columnsXL="3" >
+                        <f:SimpleForm id="form" editable="true" layout="ColumnLayout" title="Find Movies" columnsM="2" columnsL="3" columnsXL="3">
                             <f:content>
                                 <Label text="City" labelFor="city" />
                                 <SearchField id="city" width="100%" showSearchButton="false" placeholder="Enter City" />
@@ -17,13 +22,39 @@
                                     <core:ListItem icon="sap-icon://physical-activity" key="Action" text="Action" />
                                     <core:ListItem icon="sap-icon://electrocardiogram" key="Horror" text="Horror" />
                                     <core:ListItem icon="sap-icon://paper-plane" key="ScienceFiction" text="Science Fiction" />
-									<core:ListItem icon="sap-icon://split" key="Romantic" text="Romantic" />
+                                    <core:ListItem icon="sap-icon://split" key="Romantic" text="Romantic" />
                                 </Select>
-                                <Label/>
-                                <Button text="Find Movies" class="sapUiSmallMarginTop" type="Emphasized" 
-								press="onPress('for movies!')"/>
+                                <Label />
+                                <Button text="Find Movies" class="sapUiSmallMarginTop" type="Emphasized" press="onPress('for movies!')" />
                             </f:content>
                         </f:SimpleForm>
+                        
+                        <PlanningCalendar 
+                        id="calendar" 
+                        startDate="{path:'movies>/initDate', formatter: '.formatter.formatDate'}" 
+                        rows="{movies>/movies}" 
+                        appointmentsVisualization="Filled">
+                            <toolbarContent>
+                                <Title text="Showtime" titleStyle="H3" />
+                            </toolbarContent>
+                            <rows>
+                                <PlanningCalendarRow 
+                                    title="{'movies>name'}" 
+                                    text="{'movies>genre'}" 
+                                    appointments="{'path: movies>/appointments', templateShareable: 'true'}">
+                                    <appointments>
+                                        <unified:CalendarAppointment 
+                                        startDate="{path:'movies>/startDate', formatter: '.formatter.formatDate'}" 
+                                        endDate="{path:'movies>/endDate', formatter: '.formatter.formatDate'}" 
+                                        title="{'movies>info'}" 
+                                        text="{'movies>cinemaName'}" 
+                                        icon="{'movies>icon'}" 
+                                        type="{'movies>type'}" />
+                                    </appointments>
+                                </PlanningCalendarRow>
+                            </rows>
+                        </PlanningCalendar>
+
                     </content>
                 </Page>
             </pages>
