@@ -1,12 +1,27 @@
-specVersion: '2.6'
+specVersion: "2.4"
 metadata:
-  name: openui5-basic-template-app
+  name: sap.ui.demo.basicTemplate
 type: application
-framework:
-  name: OpenUI5
-  version: "1.96.2"
-  libraries:
-    - name: sap.m
-    - name: sap.ui.core
-    - name: sap.ui.layout
-    - name: themelib_sap_horizon
+server:
+  customMiddleware:
+    - name: fiori-tools-proxy
+      afterMiddleware: compression
+      configuration:
+        ignoreCertError: false
+        ui5:
+          path:
+            - /resources
+            - /test-resources
+          url: https://ui5.sap.com
+          version: 1.71.17
+    - name: fiori-tools-appreload
+      afterMiddleware: compression
+      configuration:
+        port: 35729
+        path: webapp
+        delay: 300
+    - name: fiori-tools-preview
+      afterMiddleware: fiori-tools-appreload
+      configuration:
+        component: sap.ui.demo.basicTemplate
+        ui5Theme: sap_fiori_3
